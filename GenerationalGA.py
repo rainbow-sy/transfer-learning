@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on 2019/11/21 14:37 
-@file: GenerationalGA.py
-@author: Matt
-"""
 import numpy as np
 from GA import GA
 from keras.layers import Conv2D, Dense
@@ -37,17 +32,7 @@ class GenerationalGA(GA):
         np.random.shuffle(mating_pool)
         pairs = []
         pairs.append([mating_pool[0], mating_pool[-1]])
-        for i in range(int(self.pop_size/2-1)):
-            pairs.append([mating_pool[i], mating_pool[i + 1]])
-        pairs = np.array(pairs)
-        print('Pairs: {}'.format(list(map(list, pairs))))
-        #改变gene,基因型
-        children_gene = []
-        for pair in pairs:
-            children_gene.append(self.crossover(pair))
-        print('Cross over finished.')
-        children_gene.append(self.reinitial())
-        suceed_child = np.array([self.roulette_wheel_selection() for _ in range(int(self.pop_size / 4))])
+     
         #suceed_child_gene=self.gene[suceed_child]
         children_gene.append(self.gene[suceed_child])
         self.replacement(children_gene)
@@ -75,11 +60,5 @@ class GenerationalGA(GA):
                     mutate_gene[i][j] = 1 - mutate_gene[i][j]
         return mutate_gene
 
-    def replacement(self, _child_gene):
-        a = _child_gene[0]
-        for i in range(1, len(_child_gene)):
-            a = np.vstack((a, _child_gene[i]))
-        self.gene[:] = a
-        print('Replacement finished.')
-        #self.chroms[:] = _child
+
 
